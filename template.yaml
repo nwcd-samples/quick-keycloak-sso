@@ -485,7 +485,7 @@ Outputs:
     Value: !Sub "https://${KeycloakDomain}"
 
   Step30Bootstrap:
-    Description: "Configure Keycloak - Edit .env and run main.py in /opt/keycloak/bootstrap/"
+    Description: "Configure Keycloak - Edit .env and run bootstrap.sh in /opt/keycloak/bootstrap/"
     Value: !Sub "ssh ec2-user@${EC2Instance.PublicIp}"
 
   Step40SAMLProvider:
