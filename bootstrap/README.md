@@ -220,13 +220,13 @@
 ### IdP-Initiated SSO
 
 1. 在无痕浏览器中访问：`https://sso.example.com/realms/quick/protocol/saml/clients/aws`
-2. 跳转到 Keycloak 登录页，使用 Keycloak 用户密码登录
+2. 跳转到 Keycloak 登录页，使用 Keycloak 用户名和密码登录
 3. 登录后验证进入 Quick
 
 ### SP-Initiated SSO（推荐）
 
 1. 在无痕浏览器中访问：`https://quicksight.aws.amazon.com/sn/account/{QUICK_ACCOUNT_NAME}/start`
-2. 跳转到 Keycloak 登录页，使用 Keycloak 用户密码登录
+2. 跳转到 Keycloak 登录页，使用 Keycloak 用户名和密码登录
 3. 登录后验证进入 Quick
 
 ### Keycloak 用户中心
@@ -241,7 +241,7 @@
 
 1. 在无痕浏览器中访问：`https://quicksight.aws.amazon.com/sn/account/{QUICK_ACCOUNT_NAME}/start?enable-sso=0`
 2. 在 Quick 登录页输入 AWS 用户名
-3. 跳转到 AWS 登录页，使用 AWS 用户密码登录
+3. 跳转到 AWS 登录页，使用 AWS 用户名和密码登录
 4. 登录后验证进入 Quick
 
 ## 步骤 10/11：配置 Quick 桌面客户端 SSO
@@ -298,5 +298,5 @@
 
 1. 下载并安装 Amazon Quick Desktop
 2. 登录界面选择 **Enterprise 登录**
-3. 跳转到 Keycloak 登录页，使用 Keycloak 用户密码登录
+3. 跳转到 Keycloak 登录页，使用 Keycloak 用户名和密码登录
 4. 登录后验证进入 Quick Desktop

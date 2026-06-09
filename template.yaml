@@ -63,8 +63,7 @@ Parameters:
 
   KeycloakAdminPassword:
     Type: String
-    NoEcho: true
-    Default: admin
+    Default: changeme
     Description: Keycloak bootstrap admin password
 
   # PostgreSQL
@@ -75,8 +74,7 @@ Parameters:
 
   PostgresPassword:
     Type: String
-    NoEcho: true
-    Default: keycloak
+    Default: changeme
     Description: PostgreSQL password
 
 Resources:
@@ -223,7 +221,7 @@ Resources:
           KEYCLOAK_QUICK_ADMIN_PASSWORD=
           KEYCLOAK_QUICK_ADMIN_EMAIL=
 
-          # Amazon Quick 账户
+          # Amazon Quick 账户名称
           QUICK_ACCOUNT_NAME=
 
           # AWS 账户
