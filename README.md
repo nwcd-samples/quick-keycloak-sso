@@ -196,10 +196,12 @@ carol@example.com,读者专业版
 
 2）在 Amazon Quick Desktop 中上传文件并输入指令：
 
-> 根据附件创建用户
-> Quick 账户名称：example
-> SSO 域名：sso.example.com
-> 管理员邮箱：admin@example.com
+```
+根据附件创建用户
+Quick 账户名称：example
+SSO 域名：sso.example.com
+管理员邮箱：admin@example.com
+```
 
 3）之后自动完成以下全部流程：
 - 解析用户清单，智能识别字段
