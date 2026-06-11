@@ -37,7 +37,7 @@
 
 运行脚本一次性配置好 Realm、Client、Roles、Groups、用户等，不用手动逐个创建。
 
-- [ ] SSH 登录 EC2，进入 `/opt/keycloak/bootstrap/`
+- [ ] SSH 登录 EC2，进入 `/opt/quick-sso-keycloak/bootstrap/`
 - [ ] 编辑 `.env`，填写：
   - Keycloak 管理员凭据（步骤 2 创建的正式管理员的用户名和密码）
   - Quick 管理员信息（Quick 初始用户的用户名和邮箱）
@@ -76,63 +76,65 @@
   - Client ID：`amazon-quick-desktop`
 - [ ] 添加扩展
 
----
+## 二、管理员须知
 
-## 二、登录方式
+部署完成后的日常运维规范，包括 Keycloak 用户管理、AWS 账户维护、Quick 用户管理等操作要求。详见 [管理员须知](admin-guide.md)。
 
-### 1. Web 端
+## 三、用户须知
+
+### 1. 登录方式
+
+#### 1.1 Web 端
 
 Quick 中的用户名就是 IAM 联合用户名称，格式为 `角色名/邮箱`，如 `QuickAdminProRole/admin@example.com`。
 
-#### 1.1 IAM 用户（Quick 初始用户）
+**IAM 用户（Quick 初始用户）**
 
 使用 AWS 用户名和密码登录：
 
 `https://quicksight.aws.amazon.com/sn/account/<QUICK_ACCOUNT_NAME>/start?enable-sso=0`
 
-#### 1.2 Keycloak 用户
+**Keycloak 用户**
 
 使用 Keycloak 用户名和密码登录（SSO）：
 
 `https://quicksight.aws.amazon.com/sn/account/<QUICK_ACCOUNT_NAME>/start`
 
-#### 1.3 Keycloak 用户中心
+**Keycloak 用户中心**
 
 用户可自行管理个人信息、修改密码、查看登录设备：
 
 `https://<KEYCLOAK_DOMAIN>/realms/quick/account`
 
-### 2. Desktop 端
+#### 1.2 Desktop 端
 
 通过邮件地址识别，对应 Quick 用户管理中的电子邮件，如 `admin@example.com`。
 
-#### 2.1 IAM 用户（Quick 初始用户）
+**IAM 用户（Quick 初始用户）**
 
 先使用 AWS 用户名和密码登录 Web 端，再使用 Keycloak 用户名和密码登录（SSO）：
 
 - Bootstrap 脚本已自动创建一个和 Quick 初始用户相同的 Keycloak 用户（密码独立）
 - 该用户不能加入 Keycloak 中任何 quick-* 组，否则会在 Quick 中额外创建一个 IAM 联合身份用户
 
-#### 2.2 Keycloak 用户
+**Keycloak 用户**
 
 使用 Keycloak 用户名和密码登录（SSO）：
 
 - 如果用户从未登录过 Quick（包括 Web 端），首次 SSO 登录会自动创建用户并停留在 Web 端
 - 再次点击 Desktop 的 SSO 登录及后续登录，跳转正常
 
----
-
-## 三、常用操作
+## 四、常用操作
 
 ### 1.【管理员】批量创建用户
 
 通过导入 `keycloak-user-create` Skill，上传用户清单即可自动完成创建用户、分配角色、发送邀请邮件。
 
-#### 前置条件
+#### 1.1 前置条件
 
 在 Amazon Quick Desktop 中完成以下配置：
 
-**1. keycloak-mcp-server**
+**keycloak-mcp-server**
 
 Keycloak 管理 MCP Server，支持用户、组、角色、Client 等 80+ 操作。
 
@@ -154,7 +156,7 @@ Keycloak 管理 MCP Server，支持用户、组、角色、Client 等 80+ 操作
 }
 ```
 
-**2. mcp-email-server**
+**mcp-email-server**
 
 IMAP / SMTP 邮件收发 MCP Server，支持收件、发件、附件等操作。
 
@@ -177,15 +179,15 @@ IMAP / SMTP 邮件收发 MCP Server，支持收件、发件、附件等操作。
 }
 ```
 
-**3. keycloak-user-create Skill**
+**keycloak-user-create Skill**
 
 支持单个或批量的创建 Keycloak 用户并发送邀请邮件的自动化流程。
 
 设置 → 技能 → 导入，选择本仓库 `skills/keycloak-user-create/` 文件夹。
 
-#### 操作步骤
+#### 1.2 操作步骤
 
-1. 准备用户清单，CSV 或 Excel 格式，至少包含"邮件"和"角色"两列：
+1）准备用户清单，CSV 或 Excel 格式，至少包含"邮件"和"角色"两列：
 
 ```csv
 邮件,角色
@@ -194,14 +196,16 @@ bob@example.com,作者专业版
 carol@example.com,读者专业版
 ```
 
-2. 在 Amazon Quick Desktop 中上传文件并输入指令：
+2）在 Amazon Quick Desktop 中上传文件并输入指令：
 
-> 根据附件创建用户
-> Quick 账户名称：example
-> SSO 域名：sso.example.com
-> 管理员邮箱：admin@example.com
+```
+根据附件创建用户
+Quick 账户名称：example
+SSO 域名：sso.example.com
+管理员邮箱：admin@example.com
+```
 
-3. 之后自动完成以下全部流程：
+3）之后自动完成以下全部流程：
 - 解析用户清单，智能识别字段
 - 按邮箱查重，已存在的用户自动跳过
 - 创建用户，生成随机临时密码
